@@ -1,0 +1,53 @@
+定义Student和GraduateStudent（由Student派生）两个类，学生包含姓名和分数两个数据，研究生包括姓名、分数和导师姓名。并使下面的程序能得到正确结果。 
+
+说明：下面的程序已经在后台，系统自动在你提交的代码后面添加上这些代码（即：你提交的程序，不应该再含有下面的这些代码，修改代码时，也应把这些代码去掉再提交）
+
+  
+
+void fn(Student&s)
+
+{
+
+        cout<<s;
+
+}
+
+
+
+int main()   
+
+{
+
+       char s_name[20], t_name[20];
+
+       int  score;
+
+       cin>>s_name>>score;
+
+       Student s(s_name, score);   
+
+       cin>>s_name>>score>>t_name;
+
+
+       GraduateStudent g(s_name, score , t_name);      
+
+       cout<<s<<g;   
+
+       fn(s);
+
+       fn(g);
+
+       return 0;
+
+} 
+Input
+分别输入学生和研究生的数据
+
+Output
+输出样例所示的输出结果
+
+Sample Input
+zhangsan 85
+lisi 90 liulaoshi
+Sample Output
+name:zhangsan,score:85
