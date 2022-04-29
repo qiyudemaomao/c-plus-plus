@@ -1,0 +1,77 @@
+//////////////       Student.h        //////////
+#include<iostream>
+using namespace std;
+class Student  
+{
+public:
+	Student(char *,int);
+	virtual void disp(ostream &);
+protected:
+	char name[20];
+	int score;
+};
+////////////   GraduateStudent.h   ////////
+//#include"Student.h"      多文件结构需要
+
+class GraduateStudent: public Student  
+{
+public:
+	GraduateStudent(char *,int ,char *);
+	void disp(ostream &);
+protected:
+	char tname[20];
+};   
+/////////////     Student.cpp    ///////////
+//#include "Student.h"      多文件结构需要
+#include<cstring>
+
+Student::Student(char *p,int a)
+{
+	strcpy(name,p);
+	score=a;
+}
+ 
+void Student::disp(ostream &out)
+{
+	out<<"name:"<<name<<','<<"score:"<<score<<endl;
+}
+///////////      GraduateStudent.cpp    ////////
+//#include "GraduateStudent.h"      多文件结构需要
+
+GraduateStudent::GraduateStudent(char *p,int a,char *q):Student(p,a)
+{
+	strcpy(tname,q);
+}
+
+void GraduateStudent::disp(ostream &out)
+{
+	out<<"name:"<<name<<','<<"score:"<<score<<','<<"teacher:"<<tname<<endl;
+}
+////////////    inmain.cpp        //////////
+//#include"GraduateStudent.h"      多文件结构需要
+//#include<iostream>      多文件结构需要
+//using namespace std;      多文件结构需要
+ostream& operator<<(ostream &oo,Student &s)
+{
+	s.disp(oo);
+	return oo;
+}
+
+void fn(Student&s)
+{
+	cout<<s;
+}
+
+int main()   
+{
+    char s_name[20], t_name[20];
+    int  score;
+       cin>>s_name>>score;
+       Student s(s_name, score);   
+       cin>>s_name>>score>>t_name;
+       GraduateStudent g(s_name, score , t_name);      
+       cout<<s<<g;   
+       fn(s);
+       fn(g);
+       return 0;
+}
