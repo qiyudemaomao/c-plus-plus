@@ -1,0 +1,76 @@
+       每个学生有两项数据：学号和分数，其中，有些学生的学号是整数，有些是字符串（string类的对象），而分数则可能是int或float。键盘输入三个学生的数据，第一个学生的数据是：字符串+整数，第二个学生的数据是：整数+整数，第三个学生的数据是：整数+实数。
+
+编程生成这三个对象，然后输出他们的信息。
+
+Input
+三行数据：
+
+第一行：一个字符串，一个整数
+第二行：两个整数
+第三行：一个整数，一个实数
+
+Output
+输出三个学生的信息
+
+Sample Input
+09081101 90
+12 80
+5 92.5
+Sample Output
+Num:09081101,Score:90
+Num:12,Score:80
+Num:5,Score:92.5
+
+
+
+
+
+///////////////     Student.h     ///////////
+#include<iostream>
+using namespace std;
+
+template<class t1,class t2>
+class Student  
+{
+public:
+	Student(t1,t2);
+	void out();
+protected:
+	t1 num;
+	t2 score;
+};
+
+template<class t1,class t2>
+Student<t1,t2>::Student(t1 a,t2 b)
+{
+	num=a;
+	score=b;
+}
+
+template<class t1,class t2>
+void Student<t1,t2>::out()
+{
+	cout<<"Num:"<<num<<','<<"Score:"<<score<<endl;
+}
+
+///////////////   inmain.cpp   /////////////
+//#include"Student.h"      多文件结构需要
+//#include<iostream>      多文件结构需要
+#include<string>
+//using namespace std;      多文件结构需要
+int main()
+{
+	string str;
+	int n,s;
+	float x;
+	cin>>str>>s;
+	Student<string,int> s1(str,s);
+	cin>>n>>s;
+	Student<int,int> s2(n,s);
+	cin>>n>>x;
+	Student<int,float> s3(n,x);
+	s1.out();
+	s2.out();
+	s3.out();
+	return 0;
+}
