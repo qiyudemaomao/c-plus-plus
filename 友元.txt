@@ -1,0 +1,162 @@
+//////////////         Date.h          /////////
+class Date  
+{
+public:
+	Date(int,int,int);
+	void disp();
+protected:
+	int year;
+	int month;
+	int day;
+};
+
+///////////      Person.h    ////////////////////////
+
+class Person  
+{
+public:
+	Person(char *,int);
+	~Person();
+	void print();
+protected:
+	char *name;
+	int age;
+};
+
+//////////////     Teacher.h    ////////////////////
+
+//#include"Person.h"     多文件结构需要
+class Teacher :public Person
+{
+public:
+	Teacher(char *,int,char *);
+	~Teacher();
+	void pprint();
+	void change(class Student &,int );
+protected:
+	char *work;
+};
+
+////////////        Student.h     ///////////
+
+//#include"Date.h"            多文件结构需要
+//#include"Teacher.h"       多文件结构需要
+class Student :public Person
+{
+public:
+	Student(char *,int,int,int,int,int);
+	friend void Teacher::change(Student &,int );
+	void out();
+protected:
+	Date d;
+	int score;
+};
+
+///////////////        Date.cpp    ////////
+
+//#include "Date.h"      多文件结构需要
+#include<iostream>    
+using namespace std;
+Date::Date(int a,int b,int c)
+{
+	year=a;
+	month=b;
+	day=c;
+}
+
+void Date::disp()
+{
+	cout<<"birthday:"<<year<<'/'<<month<<'/'<<day<<endl;
+}
+
+///////////    Person.cpp        //////////////
+
+//#include "Person.h"             多文件结构需要
+#include<cstring>
+//#include<iostream>            多文件结构需要
+//using namespace std;          多文件结构需要
+
+Person::Person(char *p,int a)
+{
+	name=new char[strlen(p)+1];
+	strcpy(name,p);
+	age=a;
+}
+
+Person::~Person()
+{
+	delete []name;
+}
+
+void Person::print()
+{
+	cout<<"name:"<<name<<" age:"<<age<<endl;
+}
+
+//////////////             Student.cpp          /////////////////
+
+//#include "Student.h"       多文件结构需要
+//#include<iostream>       多文件结构需要
+//using namespace std;     多文件结构需要
+
+Student::Student(char *p,int a,int y,int m,int dd,int s):Person(p,a),d(y,m,dd)
+{
+	score=s;
+}
+
+void Student::out()
+{
+	Person::print();
+	d.disp();
+	cout<<"score:"<<score<<endl;
+}
+
+////////////           Teacher.cpp        ///////////////////
+
+//#include"Student.h"              多文件结构需要
+//#include<cstring>                多文件结构需要
+//#include<iostream>             多文件结构需要
+//using namespace std;            多文件结构需要
+
+Teacher::Teacher(char *p,int a,char *q):Person(p,a)
+{
+	work=new char[strlen(q)+1];
+	strcpy(work,q);
+}
+
+Teacher::~Teacher()
+{
+	delete []work;
+}
+
+void Teacher::pprint()
+{
+	Person::print();
+	cout<<"title:"<<work<<endl;
+}
+void Teacher::change(Student &s,int sc)
+{
+	s.score=sc;
+	s.out();
+}
+
+///////////              inmain.cpp           ///////////////
+
+//#include"Student.h"         多文件结构需要
+//#include<iostream>        多文件结构需要
+//using namespace std;      多文件结构需要
+int main()
+{
+	char a[20],b[20],c[20];
+	int year,month,day,age,tage,score,xin;
+	cin>>a>>age>>year>>month>>day>>score;
+	Student s(a,age,year,month,day,score);
+	cin>>b>>tage>>c;
+	Teacher t(b,tage,c);
+	cin>>xin;
+	s.out();
+	t.pprint();
+	t.change(s,xin);
+	return 0;
+}
+
