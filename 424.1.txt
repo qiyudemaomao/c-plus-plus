@@ -1,0 +1,98 @@
+////////////       Time.h   ////////////
+class Time  
+{
+public:
+	Time(int a=0,int b=0,int c=0);
+	void disp();
+	friend Time operator-(Time &,Time&);
+	friend Time& operator--(Time &);
+	friend Time operator--(Time &,int);
+protected:
+	int hour,fen,miao;
+};
+/////////////     Time.cpp   //////////
+//#include "Time.h"           多文件结构需要
+#include<iostream>
+using namespace std;
+
+Time::Time(int a,int b,int c)
+{
+	hour=a;
+	fen=b;
+	miao=c;
+}
+
+void Time::disp()
+{
+	cout<<hour<<':'<<fen<<'\''<<miao<<'\"'<<endl;
+}
+///////////       inmain.cpp   //////////
+//#include"Time.h"           多文件结构需要
+//#include<iostream>           多文件结构需要
+//using namespace std;           多文件结构需要
+Time operator-(Time &t1,Time &t2)
+{
+	Time sum;
+	sum.hour = t1.hour - t2.hour;
+    sum.fen = t1.fen - t2.fen;
+    sum.miao = t1.miao - t2.miao;
+    if(sum.miao<0 )
+	{
+        sum.fen--;
+        sum.miao += 60;
+    }
+    if(sum.fen<0)
+	{
+		sum.hour--;
+        sum.fen += 60;
+    }
+	return sum;
+}
+Time& operator--(Time &t)
+{
+	t.miao--;
+	if(t.miao<0)
+	{
+		t.fen--;
+		t.miao+=60;
+	}
+	if(t.fen<0)
+	{
+		t.hour--;
+		t.fen+=60;
+	}
+	return t;
+}
+
+Time operator--(Time &t,int)
+{
+	Time t1(t);
+	t.miao--;
+	if(t.miao<0)
+	{
+		t.fen--;
+		t.miao+=60;
+	}
+	if(t.fen<0)
+	{
+		t.hour--;
+		t.fen+=60;
+	}
+	return t1;
+}
+
+int main()      
+{   
+	int h1,m1,s1,h2,m2,s2;
+    	cin>>h1>>m1>>s1>>h2>>m2>>s2;
+	Time  t1(h1,m1,s1), t2(h2,m2,s2), t;      
+	t=t1-t2;      
+	t.disp();      
+   	 t--;      
+    	t.disp();      
+	(--t)--;      
+	t.disp(); 
+	(t--).disp();
+	t.disp();
+    	return 0;    
+}
